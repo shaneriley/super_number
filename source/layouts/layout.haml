@@ -1,0 +1,9 @@
+!!! 5
+%html(lang="en-US")
+  %head
+    %meta(charset="UTF-8")
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "jquery.min", "jquery.super_number", "application"
+  %body
+    %section
+      = yield

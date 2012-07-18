@@ -1,0 +1,42 @@
+@import "mixins"
+
+body
+  font: normal 14px Helvetica, Arial, sans-serif
+  color: #181818
+  background: #ae1f23
+  > section
+    width: 880px
+    padding: 40px
+    margin: 0 auto
+    background: #e5e5e5
+    +box-shadow(0 0 5px 2px rgba(0, 0, 0, .3))
+
+input[type="text"]
+  width: 20px
+  height: 18px
+  padding: 2px 5px
+  font: normal 12px Helvetica, Arial, sans-serif
+  color: #333333
+  border: 1px solid #a7a7a7
+
+.super_number
+  display: inline-block
+  position: relative
+  a.increment,
+  a.decrement
+    position: absolute
+    z-index: 1
+    width: 30px
+    height: 20px
+    font-weight: bold
+    line-height: 20px
+    text-align: center
+    color: #ffffff
+    text-decoration: none
+    background: #ae1f23
+  a.increment
+    bottom: 100%
+    +border-top-radius(5px)
+  a.decrement
+    top: 100%
+    +border-bottom-radius(5px)
