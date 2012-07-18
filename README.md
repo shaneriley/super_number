@@ -5,7 +5,7 @@ A tiny plugin that adds spinner-like controls to text inputs. Licensed under GPL
 ## Usage
 
 To initialize with all defaults, grab your inputs with jQuery and call `.superNumber` on them.
-Your input will hav controls and a container added to it that will look like
+Your input will have controls and a container added to it that will look like
 this:
 
 ```html
@@ -18,7 +18,7 @@ this:
 
 ## Options
 
-Technically, everything is overrideable, right down to the initializer method,
+Technically, everything is overridable, right down to the initializer method,
 but the options you're likely to override are:
 
 ```javascript
@@ -47,7 +47,7 @@ $("input").superNumber("destroy");
 ```
 
 To modify any aspect of the plugin after initialization, grab one or more
-elements with jQuery and manipulate the data object equal to the plugin name
+elements with jQuery and manipulate the data object stored as the plugin name
 (defaults to "superNumber").
 
 ```javascript
