@@ -1,4 +1,4 @@
-/* jQuery superNumber version 1.0.0
+/* jQuery superNumber version 1.0.1
  * (c) 2012 Shane Riley
  * Original source at https://github.com/shaneriley/super_number
  * Licensed under GPL 2.0 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -12,6 +12,7 @@
     max: undefined,
     min: undefined,
     step: 1,
+    hide_on_blur: true,
     controls: {
       $el: $("<a />", { href: "#" }),
       increment: "+",
@@ -32,6 +33,7 @@
         var c = v + "crement",
             $e = s.controls.$el.clone().text(s.controls[c]).data(super_number.name, s)
                   .addClass(c);
+        s.hide_on_blur && $e.hide();
         s.controls["$" + c] = $e.appendTo($c);
       });
     },
@@ -45,7 +47,7 @@
     keyup: function(e) {
       if (e.which !== 38 && e.which !== 40) { return; }
       var s = $(this).data(super_number.name);
-      s.controls["$" + (e.which === 38 ? "in" : "de") + "crement"].click();
+      s.controls["$" + (e.which === 38 ? "in" : "de") + "crement"].mouseup();
     },
     click: function(e) {
       e.preventDefault();
@@ -56,6 +58,11 @@
           diff = v + +change;
       if (diff > s.max || diff < s.min) { return; }
       s.$el.val(diff);
+    },
+    toggle: function(e) {
+      var $e = $(this),
+          s = $e.data(super_number.name);
+      s.controls.$increment.add(s.controls.$decrement).toggle(e.type === "focus");
     },
     destroy: function() {
       var $els = this;
@@ -77,8 +84,9 @@
       s.createElements();
       s.positionControls();
       s.$el.on("keydown." + s.name + ".keyup", s.keyup);
-      s.$el.closest("." + s.container["class"]).on("click." + s.name + ".click", "a", s.click);
-      s.initialized = true;
+      s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.click)
+        .on("mousedown." + s.name + ", click." + s.name, "a", false);
+      s.hide_on_blur && s.$el.on("focus." + s.name + ".toggle, blur." + s.name + ".toggle", s.toggle);
     }
   };
 

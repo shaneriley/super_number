@@ -1,4 +1,4 @@
-# jQuery superNumber v1.0.0
+# jQuery superNumber v1.0.1
 
 A tiny plugin that adds spinner-like controls to text inputs. Licensed under GPL 2.0 [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -35,7 +35,8 @@ but the options you're likely to override are:
   container: {
     element: "<div />",              // Element to contain controls and input
     "class": "super_number"          // Class to add to containing element
-  }
+  },
+  hide_on_blur: true                 // Hide controls when input loses focus
 }
 ```
 
