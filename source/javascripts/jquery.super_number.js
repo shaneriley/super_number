@@ -9,19 +9,6 @@
 
   var super_number = {
     name: "superNumber",
-    max: undefined,
-    min: undefined,
-    step: 1,
-    hide_on_blur: true,
-    controls: {
-      $el: $("<a />", { href: "#" }),
-      increment: "+",
-      decrement: "-"
-    },
-    container: {
-      element: "<div />",
-      "class": "super_number"
-    },
     createElements: function() {
       var s = this,
           container_opts = $.extend({}, s.container),
@@ -101,7 +88,7 @@
         $els.each(function(i) {
           var plugin_instance = $.extend(true, {
             $el: $els.eq(i)
-          }, plugin, opts);
+          }, $.fn[plugin.name].defaults, plugin, opts);
           if (plugin_instance.$el.data(plugin.name)) { return; }
           plugin_instance.$el.data(plugin.name, plugin_instance);
           plugin_instance.init();
@@ -111,6 +98,22 @@
         $.error('Method ' +  method + ' does not exist on jQuery.' + plugin.name);
       }
       return $els;
+    };
+
+    $.fn[plugin.name].defaults = {
+      max: undefined,
+      min: undefined,
+      step: 1,
+      hide_on_blur: true,
+      controls: {
+        $el: $("<a />", { href: "#" }),
+        increment: "+",
+        decrement: "-"
+      },
+      container: {
+        element: "<div />",
+        "class": "super_number"
+      }
     };
   });
 })(jQuery || undefined);
