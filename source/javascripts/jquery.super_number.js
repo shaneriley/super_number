@@ -31,6 +31,24 @@
           left: (s.$el.closest("." + s.container["class"]).outerWidth() - s.controls.$increment.outerWidth()) / 2
         });
     },
+    formatOutput: function(val) { return val; },
+    setScale: function(val) {
+      var s = this,
+          chopped = (new RegExp("\\d*\\.?\\d{0," + s.scale + "}")).exec("" + val).pop();
+      if (!/\./.test(chopped) && s.scale) { chopped += "."; }
+      chopped = chopped.replace(/\d*$/, function($1) {
+        return $1 + (s.scale - $1.length > 0 ? Array(s.scale - $1.length + 1).join("0") : "");
+      });
+      return chopped;
+    },
+    setPrecision: function(val) {
+      var whole_num = val.replace(/\..*/, ""),
+          decimal = val.replace(/\d*\.?/, "");
+      if (whole_num.length < this.precision) {
+        whole_num = Array(this.precision - whole_num.length + 1).join("0") + whole_num;
+      }
+      return whole_num + (decimal ? "." + decimal : "");
+    },
     keyup: function(e) {
       if (e.which !== 38 && e.which !== 40) { return; }
       var s = $(this).data(super_number.name);
@@ -43,8 +61,14 @@
           v = +s.$el.val(),
           change = ($e.hasClass("increment") ? "+" : "-") + s.step,
           diff = v + +change;
-      if (diff > s.max || diff < s.min) { return; }
-      s.$el.val(diff);
+      if (diff > s.max || diff < s.min) {
+        if (!s.loop) { return; }
+        else {
+          diff = diff > s.max ? s.min : s.max;
+        }
+      }
+      diff = s.setPrecision(s.setScale(diff));
+      s.$el.val(s.formatOutput(diff)).change();
     },
     toggle: function(e) {
       var $e = $(this),
@@ -105,6 +129,9 @@
       min: undefined,
       step: 1,
       hide_on_blur: true,
+      precision: 0,
+      scale: 0,
+      loop: false,
       controls: {
         $el: $("<a />", { href: "#" }),
         increment: "+",
