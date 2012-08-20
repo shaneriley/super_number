@@ -1,4 +1,4 @@
-# jQuery superNumber v1.0.1
+# jQuery superNumber v1.1.0
 
 A tiny plugin that adds spinner-like controls to text inputs. Licensed under GPL 2.0 [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -27,6 +27,12 @@ but the options you're likely to override are:
   max: undefined,                    // Max value for input
   min: undefined,                    // Min value for input
   step: 1,                           // Amount to change value by
+  loop: false,                       // Exceeding min/max loops to opposite end
+  precision: 0,                      // Number of integer places
+  scale: 0,                          // Number of decimal places
+  formatOutput: function(val) {      // Callback to format value. Must remain a number.
+    return val;
+  },
   controls: {
     $el: $("<a />", { href: "#" }),  // Element template to use for controls
     increment: "+",                  // Text for incrementer element

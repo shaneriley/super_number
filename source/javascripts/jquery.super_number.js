@@ -1,4 +1,4 @@
-/* jQuery superNumber version 1.0.1
+/* jQuery superNumber version 1.1.0
  * (c) 2012 Shane Riley
  * Original source at https://github.com/shaneriley/super_number
  * Licensed under GPL 2.0 (http://www.gnu.org/licenses/gpl-2.0.html)
