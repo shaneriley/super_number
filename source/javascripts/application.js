@@ -4,9 +4,10 @@ $(function() {
   $("input.default").superNumber();
 
   $("input.step_5").superNumber({
-    step: 15,
+    step: .6,
     max: 45,
     precision: 2,
+    scale: 2,
     loop: true
   });
 });

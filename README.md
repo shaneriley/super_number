@@ -1,4 +1,4 @@
-# jQuery superNumber v1.1.0
+# jQuery superNumber v1.1.1
 
 A tiny plugin that adds spinner-like controls to text inputs. Licensed under GPL 2.0 [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
