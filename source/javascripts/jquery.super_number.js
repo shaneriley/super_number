@@ -58,10 +58,15 @@
     click: function(e) {
       e.preventDefault();
       var $e = $(this),
+          increment = $e.hasClass("increment"),
           s = $e.data(super_number.name),
           v = s.$el.val() ? +s.$el.val() : 0,
-          change = ($e.hasClass("increment") ? 1 : -1) * s.step,
-          diff = v + change;
+          change = (increment ? 1 : -1) * s.step,
+          diff = v + change,
+          mod = diff % s.step;
+      if (mod) {
+        diff = increment ? diff - mod : diff + (s.step - mod);
+      }
       if (diff > s.max || diff < s.min) {
         if (!s.loop) { return; }
         else {

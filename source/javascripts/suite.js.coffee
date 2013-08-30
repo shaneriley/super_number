@@ -82,8 +82,23 @@ test "specify minimum value", ->
   sn.up(8)
   $el.shouldHaveValue("10")
 
-# test "specify step value"
-# test "step value reverts to step increment if non-step value is entered manually"
+test "specify step value", ->
+  $el = sn.init(0).fire(
+    step: 5
+  )
+  sn.up(3)
+  $el.shouldHaveValue("15")
+
+test "step value reverts to step increment if non-step value is entered manually", ->
+  $el = sn.init(11).fire(
+    step: 5
+  )
+  sn.up()
+  $el.shouldHaveValue("15")
+  $el.val("14")
+  sn.down()
+  $el.shouldHaveValue("10")
+
 # test "specify scale (minimum number of digits)"
 # test "disable hide on blur"
 # test "add decimal precision"
