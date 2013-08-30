@@ -1,11 +1,17 @@
 $ = jQuery
 
 sn =
+  up: (num) ->
+    num ?= 1
+    @data.controls.$increment.trigger("mouseup") while num--
+  down: (num) ->
+    num ?= 1
+    @data.controls.$decrement.trigger("mouseup") while num--
   init: (val) ->
     @$el = $("#test_input").val(val);
     @
-  fire: ->
-    @$el.superNumber()
+  fire: (opts) ->
+    @$el.superNumber(opts)
     @data = @$el.data("superNumber")
     @$el
 
@@ -47,23 +53,35 @@ test "controls disappear on blur", ->
 
 test "increment button increments by 1 when clicked", ->
   $el = sn.init(0).fire().focus()
-  sn.data.controls.$increment.trigger("mouseup")
+  sn.up()
   $el.shouldHaveValue("1")
 
 test "decrement button decrements by 1 when clicked", ->
   $el = sn.init(0).fire().focus()
-  sn.data.controls.$decrement.trigger("mouseup")
+  sn.down()
   $el.shouldHaveValue("-1")
 
 test "treat blank input as 0", ->
   $el = sn.init().fire().focus()
-  sn.data.controls.$increment.trigger("mouseup")
+  sn.up()
   $el.shouldHaveValue("1")
 
-# module "Options"
-#
-# test "specify minimum value"
-# test "specify maximum value"
+module "Options"
+
+test "specify minimum value", ->
+  $el = sn.init(4).fire(
+    min: 2
+  )
+  sn.down(3)
+  $el.shouldHaveValue("2")
+
+test "specify minimum value", ->
+  $el = sn.init(4).fire(
+    max: 10
+  )
+  sn.up(8)
+  $el.shouldHaveValue("10")
+
 # test "specify step value"
 # test "step value reverts to step increment if non-step value is entered manually"
 # test "specify scale (minimum number of digits)"
