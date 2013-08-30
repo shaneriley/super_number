@@ -44,7 +44,7 @@
     },
     setPrecision: function(val) {
       var whole_num = val.replace(/\..*/, ""),
-          decimal = val.replace(/\d*\.?/, "");
+          decimal = val.replace(/-?\d*\.?/, "");
       if (whole_num.length < this.precision) {
         whole_num = Array(this.precision - whole_num.length + 1).join("0") + whole_num;
       }
@@ -59,9 +59,9 @@
       e.preventDefault();
       var $e = $(this),
           s = $e.data(super_number.name),
-          v = +s.$el.val(),
-          change = ($e.hasClass("increment") ? "+" : "-") + s.step,
-          diff = v + +change;
+          v = s.$el.val() ? +s.$el.val() : 0,
+          change = ($e.hasClass("increment") ? 1 : -1) * s.step,
+          diff = v + change;
       if (diff > s.max || diff < s.min) {
         if (!s.loop) { return; }
         else {

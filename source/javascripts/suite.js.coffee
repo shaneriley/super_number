@@ -1,9 +1,13 @@
 $ = jQuery
 
-
 sn =
-  init: ->
-    @$el = $("#test_input")
+  init: (val) ->
+    @$el = $("#test_input").val(val);
+    @
+  fire: ->
+    @$el.superNumber()
+    @data = @$el.data("superNumber")
+    @$el
 
 $.fn.getTextArray = ->
   ($(@).map -> $(@).text()).get()
@@ -27,25 +31,35 @@ $.fn.shouldSay = (text) ->
 QUnit.begin(sn.init)
 
 test "it is chainable", ->
-  deepEqual(sn.init().superNumber().hide().show(), sn.$el)
+  deepEqual(sn.init().fire().hide().show(), sn.$el)
 
 test "controls appear on focus", ->
-  $el = sn.init().superNumber()
+  $el = sn.init().fire()
   $el.focus()
-  $el.data("superNumber").controls.$increment.shouldBe(":visible")
-  $el.data("superNumber").controls.$decrement.shouldBe(":visible")
+  sn.data.controls.$increment.shouldBe(":visible")
+  sn.data.controls.$decrement.shouldBe(":visible")
 
 test "controls disappear on blur", ->
-  $el = sn.init().superNumber()
+  $el = sn.init().fire()
   $el.focus().blur()
-  $el.data("superNumber").controls.$increment.shouldBe(":hidden")
-  $el.data("superNumber").controls.$decrement.shouldBe(":hidden")
+  sn.data.controls.$increment.shouldBe(":hidden")
+  sn.data.controls.$decrement.shouldBe(":hidden")
 
-# test "controls disappear on outside click"
-# test "controls don't disappear when clicked on"
-# test "increment button increments"
-# test "decrement button decrements"
-#
+test "increment button increments by 1 when clicked", ->
+  $el = sn.init(0).fire().focus()
+  sn.data.controls.$increment.trigger("mouseup")
+  $el.shouldHaveValue("1")
+
+test "decrement button decrements by 1 when clicked", ->
+  $el = sn.init(0).fire().focus()
+  sn.data.controls.$decrement.trigger("mouseup")
+  $el.shouldHaveValue("-1")
+
+test "treat blank input as 0", ->
+  $el = sn.init().fire().focus()
+  sn.data.controls.$increment.trigger("mouseup")
+  $el.shouldHaveValue("1")
+
 # module "Options"
 #
 # test "specify minimum value"
