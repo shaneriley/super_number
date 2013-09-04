@@ -42,13 +42,15 @@
       });
       return chopped;
     },
-    setPrecision: function(val) {
-      var whole_num = val.replace(/\..*/, ""),
+    setPrecision: function(v) {
+      var val = v.replace(/\-/, ""),
+          neg = v.length == val.length ? "" : "-",
+          whole_num = val.replace(/\..*/, ""),
           decimal = val.replace(/-?\d*\.?/, "");
       if (whole_num.length < this.precision) {
         whole_num = Array(this.precision - whole_num.length + 1).join("0") + whole_num;
       }
-      return whole_num + (decimal ? "." + decimal : "");
+      return neg + whole_num + (decimal ? "." + decimal : "");
     },
     keyup: function(e) {
       if (e.which !== 38 && e.which !== 40) { return; }

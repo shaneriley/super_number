@@ -99,7 +99,30 @@ test "step value reverts to step increment if non-step value is entered manually
   sn.down()
   $el.shouldHaveValue("10")
 
-# test "specify scale (minimum number of digits)"
+test "specify precision (min. digits preceding decimal)", ->
+  $el = sn.init("005").fire(
+    precision: 3
+  )
+  $el.shouldHaveValue("005")
+  sn.up(50)
+  $el.shouldHaveValue("055")
+  sn.up(50)
+  $el.shouldHaveValue("105")
+  sn.down(110)
+  $el.shouldHaveValue("-005")
+  sn.down(90)
+  $el.shouldHaveValue("-095")
+
+test "specify scale (min. digits after decimal)", ->
+  $el = sn.init("5.000").fire(
+    scale: 3
+  )
+  $el.shouldHaveValue("5.000")
+  sn.up(50)
+  $el.shouldHaveValue("55.000")
+  sn.down(110)
+  $el.shouldHaveValue("-55.000")
+
 # test "disable hide on blur"
 # test "add decimal precision"
 # test "disable loop"
