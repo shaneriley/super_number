@@ -123,6 +123,20 @@ test "specify scale (min. digits after decimal)", ->
   sn.down(110)
   $el.shouldHaveValue("-55.000")
 
+test "specify decimal step value w/ precision and scale", ->
+  $el = sn.init("07.95").fire(
+    precision: 2
+    scale: 2
+    step: 0.05
+  )
+  $el.shouldHaveValue("07.95")
+  sn.up()
+  $el.shouldHaveValue("08.00")
+  sn.down()
+  $el.shouldHaveValue("07.95")
+  sn.down(160)
+  $el.shouldHaveValue("-00.05")
+
 # test "disable hide on blur"
 # test "add decimal precision"
 # test "disable loop"

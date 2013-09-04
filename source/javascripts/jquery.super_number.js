@@ -62,13 +62,16 @@
       var $e = $(this),
           increment = $e.hasClass("increment"),
           s = $e.data(super_number.name),
-          v = s.$el.val() ? +s.$el.val() : 0,
-          change = (increment ? 1 : -1) * s.step,
+          multiple = s.scale != 0 ? Math.pow(10, s.scale) : 1,
+          v = (s.$el.val() ? +s.$el.val() : 0) * multiple,
+          change = (increment ? 1 : -1) * s.step * multiple,
+          step = s.step * multiple,
           diff = v + change,
-          mod = diff % s.step;
+          mod = Math.round(((diff * multiple) % step) * multiple) / multiple;
       if (mod) {
-        diff = increment ? diff - mod : diff + (s.step - mod);
+        diff = increment ? diff - mod : diff + (step - mod);
       }
+      diff = diff / multiple;
       if (diff > s.max || diff < s.min) {
         if (!s.loop) { return; }
         else {
