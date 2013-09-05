@@ -15,23 +15,12 @@ sn =
     @data = @$el.data("superNumber")
     @$el
 
-$.fn.getTextArray = ->
-  ($(@).map -> $(@).text()).get()
-
 $.fn.shouldHaveValue = (val) ->
   equal @.val(), val, "#{@.selector} should have a value of #{val}"
   @
 
 $.fn.shouldBe = (attr) ->
   ok @.is(attr), "#{@.selector} should be #{attr}"
-  @
-
-$.fn.shouldNotBe = (attr) ->
-  ok !@.is(attr), "#{@.selector} should not be #{attr}"
-  @
-
-$.fn.shouldSay = (text) ->
-  equal @.text(), text, "#{text} is displayed within #{@.selector}"
   @
 
 QUnit.begin(sn.init)
