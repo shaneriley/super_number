@@ -58,30 +58,26 @@ test "treat blank input as 0", ->
 module "Options"
 
 test "specify minimum value", ->
-  $el = sn.init(4).fire(
+  $el = sn.init(4).fire
     min: 2
-  )
   sn.down(3)
   $el.shouldHaveValue("2")
 
 test "specify minimum value", ->
-  $el = sn.init(4).fire(
+  $el = sn.init(4).fire
     max: 10
-  )
   sn.up(8)
   $el.shouldHaveValue("10")
 
 test "specify step value", ->
-  $el = sn.init(0).fire(
+  $el = sn.init(0).fire
     step: 5
-  )
   sn.up(3)
   $el.shouldHaveValue("15")
 
 test "step value reverts to step increment if non-step value is entered manually", ->
-  $el = sn.init(11).fire(
+  $el = sn.init(11).fire
     step: 5
-  )
   sn.up()
   $el.shouldHaveValue("15")
   $el.val("14")
@@ -89,9 +85,8 @@ test "step value reverts to step increment if non-step value is entered manually
   $el.shouldHaveValue("10")
 
 test "specify precision (min. digits preceding decimal)", ->
-  $el = sn.init("005").fire(
+  $el = sn.init("005").fire
     precision: 3
-  )
   $el.shouldHaveValue("005")
   sn.up(50)
   $el.shouldHaveValue("055")
@@ -103,9 +98,8 @@ test "specify precision (min. digits preceding decimal)", ->
   $el.shouldHaveValue("-095")
 
 test "specify scale (min. digits after decimal)", ->
-  $el = sn.init("5.000").fire(
+  $el = sn.init("5.000").fire
     scale: 3
-  )
   $el.shouldHaveValue("5.000")
   sn.up(50)
   $el.shouldHaveValue("55.000")
@@ -113,11 +107,10 @@ test "specify scale (min. digits after decimal)", ->
   $el.shouldHaveValue("-55.000")
 
 test "specify decimal step value w/ precision and scale", ->
-  $el = sn.init("07.95").fire(
+  $el = sn.init("07.95").fire
     precision: 2
     scale: 2
     step: 0.05
-  )
   $el.shouldHaveValue("07.95")
   sn.up()
   $el.shouldHaveValue("08.00")
@@ -127,20 +120,18 @@ test "specify decimal step value w/ precision and scale", ->
   $el.shouldHaveValue("-00.05")
 
 test "disable hide on blur", ->
-  $el = sn.init().fire(
+  $el = sn.init().fire
     hide_on_blur: false
-  )
   $el.focus()
   sn.data.controls.$increment.shouldBe(":visible")
   $el.blur()
   sn.data.controls.$increment.shouldBe(":visible")
 
 test "loop", ->
-  $el = sn.init(4).fire(
+  $el = sn.init(4).fire
     min: -5
     max: 5
     loop: true
-  )
   sn.up(2)
   $el.shouldHaveValue(-5)
   sn.down(3)
