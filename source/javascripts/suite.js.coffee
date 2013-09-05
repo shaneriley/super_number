@@ -137,8 +137,15 @@ test "specify decimal step value w/ precision and scale", ->
   sn.down(160)
   $el.shouldHaveValue("-00.05")
 
-# test "disable hide on blur"
-# test "add decimal precision"
+test "disable hide on blur", ->
+  $el = sn.init().fire(
+    hide_on_blur: false
+  )
+  $el.focus()
+  sn.data.controls.$increment.shouldBe(":visible")
+  $el.blur()
+  sn.data.controls.$increment.shouldBe(":visible")
+
 # test "disable loop"
 # test "specify custom controls"
 # test "specify custom container"
