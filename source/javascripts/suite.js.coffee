@@ -146,6 +146,13 @@ test "disable hide on blur", ->
   $el.blur()
   sn.data.controls.$increment.shouldBe(":visible")
 
-# test "disable loop"
-# test "specify custom controls"
-# test "specify custom container"
+test "loop", ->
+  $el = sn.init(4).fire(
+    min: -5
+    max: 5
+    loop: true
+  )
+  sn.up(2)
+  $el.shouldHaveValue(-5)
+  sn.down(3)
+  $el.shouldHaveValue(3)
