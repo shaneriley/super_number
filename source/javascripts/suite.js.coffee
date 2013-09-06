@@ -53,6 +53,8 @@ test "decrement button decrements by 1 when clicked", ->
 
 test "treat blank input as 0", ->
   $el = sn.init().fire().focus()
+  $el.blur()
+  $el.shouldHaveValue("0")
   sn.up()
   $el.shouldHaveValue("1")
 
@@ -165,3 +167,13 @@ test "disable forcing value to conform to step on blur", ->
     force_step: false
   $el.val("6").blur()
   $el.shouldHaveValue(6)
+
+test "formatOutput and formatInput", ->
+  $el = sn.init("$11.99").fire
+    scale: 2
+    formatOutput: (val) ->
+      "$#{val}"
+    formatInput: (val) ->
+      val.replace("$", "")
+  sn.up()
+  $el.shouldHaveValue("$12.00")

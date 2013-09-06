@@ -32,6 +32,7 @@
         });
     },
     formatOutput: function(val) { return val; },
+    formatInput: function(val) { return val; },
     setScale: function(val) {
       var s = this,
           multiple = +("1" + Array(s.scale + 1).join(0)),
@@ -62,7 +63,7 @@
       var $e = $(this),
           s = $e.data(super_number.name),
           multiple = s.scale != 0 ? Math.pow(10, s.scale) : 1,
-          v = multiple * (s.$el.val() ? +s.$el.val() : 0),
+          v = multiple * s.formatInput(s.$el.val()),
           step  = multiple * s.step,
           mod = Math.round((v % step) * multiple) / multiple,
           val_up = v + (mod ? (step - mod) : step),
