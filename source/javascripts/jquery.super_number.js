@@ -63,9 +63,9 @@
       var $e = $(this),
           s = $e.data(super_number.name),
           multiple = s.scale != 0 ? Math.pow(10, s.scale) : 1,
-          v = multiple * s.formatInput(s.$el.val()),
+          v = Math.round(multiple * s.formatInput(s.$el.val()) * multiple) / multiple,
           step  = multiple * s.step,
-          mod = Math.round((v % step) * multiple) / multiple,
+          mod = v % step,
           val_up = v + (mod ? (step - mod) : step),
           val_down = v - (mod ? mod : step),
           new_val;
