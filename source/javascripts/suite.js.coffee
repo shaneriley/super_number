@@ -39,6 +39,7 @@ test "controls disappear on blur", ->
   $el.focus().blur()
   sn.data.controls.$increment.shouldBe(":hidden")
   sn.data.controls.$decrement.shouldBe(":hidden")
+  $el.shouldHaveValue("0")
 
 test "increment button increments by 1 when clicked", ->
   $el = sn.init(0).fire().focus()
@@ -63,7 +64,7 @@ test "specify minimum value", ->
   sn.down(3)
   $el.shouldHaveValue("2")
 
-test "specify minimum value", ->
+test "specify maximum value", ->
   $el = sn.init(4).fire
     max: 10
   sn.up(8)
@@ -74,6 +75,14 @@ test "specify step value", ->
     step: 5
   sn.up(3)
   $el.shouldHaveValue("15")
+
+test "force value to conform to step on blur", ->
+  $el = sn.init(3).fire
+    step: 5
+  $el.val("6").blur()
+  $el.shouldHaveValue(5)
+  $el.val("8").blur()
+  $el.shouldHaveValue(10)
 
 test "step value reverts to step increment if non-step value is entered manually", ->
   $el = sn.init(11).fire
@@ -136,3 +145,17 @@ test "loop", ->
   $el.shouldHaveValue(-5)
   sn.down(3)
   $el.shouldHaveValue(3)
+
+test "snap to min or max if looping to bottom off-step", ->
+  $el = sn.init(4).fire
+    step: 5
+    force_step: true
+  sn.down()
+  $el.shouldHaveValue(0)
+
+test "disable forcing value to conform to step on blur", ->
+  $el = sn.init(3).fire
+    step: 5
+    force_step: false
+  $el.val("6").blur()
+  $el.shouldHaveValue(6)

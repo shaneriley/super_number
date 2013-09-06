@@ -57,29 +57,41 @@
       var s = $(this).data(super_number.name);
       s.controls["$" + (e.which === 38 ? "in" : "de") + "crement"].mouseup();
     },
-    click: function(e) {
+    changeValue: function(e) {
       e.preventDefault();
       var $e = $(this),
-          increment = $e.hasClass("increment"),
           s = $e.data(super_number.name),
           multiple = s.scale != 0 ? Math.pow(10, s.scale) : 1,
-          v = (s.$el.val() ? +s.$el.val() : 0) * multiple,
-          change = (increment ? 1 : -1) * s.step * multiple,
-          step = s.step * multiple,
-          diff = v + change,
-          mod = Math.round(((diff * multiple) % step) * multiple) / multiple;
-      if (mod) {
-        diff = increment ? diff - mod : diff + (step - mod);
+          v = multiple * (s.$el.val() ? +s.$el.val() : 0),
+          step  = multiple * s.step,
+          mod = Math.round((v % step) * multiple) / multiple,
+          val_up = v + (mod ? (step - mod) : step),
+          val_down = v - (mod ? mod : step),
+          new_val;
+      if ($e.is(s.$el)) {
+        if (mod && s.force_step) {
+          new_val = ((val_up - v) < (v - val_down)) ? val_up : val_down;
+        } else {
+          new_val = v;
+        }
+      } else {
+        var dir = $e.hasClass("increment"),
+            step_val = dir ? val_up : val_down,
+            calc_val = v + step * (dir ? 1 : -1);
+        mod = Math.round((calc_val % step) * multiple) / multiple;
+        new_val = mod ? step_val : calc_val;
       }
-      diff = diff / multiple;
-      if (diff > s.max || diff < s.min) {
-        if (!s.loop) { return; }
+      new_val = new_val / multiple;
+      if (new_val > s.max || new_val < s.min) {
+        if (!s.loop) {
+          new_val = new_val > s.max ? s.max : s.min;
+        }
         else {
-          diff = diff > s.max ? s.min : s.max;
+          new_val = new_val > s.max ? s.min : s.max;
         }
       }
-      diff = s.setPrecision(s.setScale(diff));
-      s.$el.val(s.formatOutput(diff)).change();
+      new_val = s.setPrecision(s.setScale(new_val));
+      s.$el.val(s.formatOutput(new_val)).change();
     },
     toggle: function(e) {
       var $e = $(this),
@@ -106,9 +118,10 @@
       s.createElements();
       s.positionControls();
       s.$el.on("keydown." + s.name + ".keyup", s.keyup);
-      s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.click)
+      s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.changeValue)
         .on("mousedown." + s.name + ", click." + s.name, "a", false);
       s.hide_on_blur && s.$el.on("focus." + s.name + ".toggle, blur." + s.name + ".toggle", s.toggle);
+      s.force_step && s.$el.on("blur." + s.name, s.changeValue);
     }
   };
 
@@ -139,6 +152,7 @@
       max: undefined,
       min: undefined,
       step: 1,
+      force_step: true,
       hide_on_blur: true,
       precision: 0,
       scale: 0,
