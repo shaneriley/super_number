@@ -70,7 +70,7 @@
           val_down = v - (mod ? mod : step),
           new_val;
       if (!$.isNumeric(v)) {
-        s.$el.val(s.formatOutput(0)).change();
+        s.$el.val(s.formatOutput(s.setPrecision(s.setScale(0)))).change();
         return;
       };
       if ($e.is(s.$el)) {
