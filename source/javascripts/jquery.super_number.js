@@ -68,6 +68,10 @@
           val_up = v + (mod ? (step - mod) : step),
           val_down = v - (mod ? mod : step),
           new_val;
+      if (!$.isNumeric(v)) {
+        s.$el.val(s.formatOutput(0)).change();
+        return;
+      };
       if ($e.is(s.$el)) {
         if (mod && s.force_step) {
           new_val = ((val_up - v) < (v - val_down)) ? val_up : val_down;

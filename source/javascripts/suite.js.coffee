@@ -56,6 +56,12 @@ test "treat blank input as 0", ->
   sn.up()
   $el.shouldHaveValue("1")
 
+test "convert non-numeric input gracefully to 0", ->
+  $el = sn.init().fire()
+  $el.val("Alfred Molina")
+  sn.up()
+  $el.shouldHaveValue("0")
+
 module "Options"
 
 test "specify minimum value", ->
