@@ -1,23 +1,58 @@
 @import "mixins"
 
 body
-  font: normal 14px Helvetica, Arial, sans-serif
-  color: #181818
-  background: #ae1f23
+  font: normal 14px "Dosis", Helvetica, Arial, sans-serif
+  color: #fff
+  background: #22272f
+  -webkit-font-smoothing: antialiased
   > section
-    width: 880px
-    padding: 40px
-    margin: 0 auto
-    background: #e5e5e5
-    +box-shadow(0 0 5px 2px rgba(0, 0, 0, .3))
+    margin: 0 100px
+
+h1
+  font-weight: 200
+  font-size: 130px
+  text-align: center
+  margin: 50px 0 10px 0
+h2
+  font-weight: 200
+  font-size: 30px
+  text-align: center
+  margin: 0 0 100px 0
+  color: #7e8b9f
+
+dl
+  text-align: center
+  dt
+    display: inline-block
+    text-align: right
+    padding: 0 20px 40px 0
+  dd
+    display: inline-block
+    span
+      font-size: 24px
+      font-weight: bold
+      margin: 0 5px
+
+label
+  font-size: 24px
+  font-weight: normal
+  line-height: 40px
 
 input[type="text"]
-  width: 20px
-  height: 18px
+  width: 40px
+  height: 40px
   padding: 2px 5px
-  font: normal 12px Helvetica, Arial, sans-serif
-  color: #333333
-  border: 1px solid #a7a7a7
+  font: normal 24px "Dosis", Helvetica, Arial, sans-serif
+  color: #22272f
+  border: none
+  -webkit-appearance: none
+  background: #fff
+  text-align: center
+  &:focus
+    outline: none
+  &.money
+    width: 80px
+
 p + p
   padding: 20px 0 0 0
 
@@ -26,19 +61,21 @@ p + p
   position: relative
   a.increment,
   a.decrement
+    font-family: Helvetica, Arial, sans-serif
     position: absolute
     z-index: 1
-    width: 30px
-    height: 20px
-    font-weight: bold
-    line-height: 20px
+    width: 100%
+    height: 30px
+    font-weight: 200
     text-align: center
     color: #ffffff
     text-decoration: none
-    background: #ae1f23
+    background: #b464a2
+    font-size: 30px
+    line-height: 30px
   a.increment
     bottom: 100%
-    +border-top-radius(5px)
+    +border-top-radius(3px)
   a.decrement
     top: 100%
-    +border-bottom-radius(5px)
+    +border-bottom-radius(3px)

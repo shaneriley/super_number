@@ -1,13 +1,35 @@
 $(function() {
-  $.fn.superNumber.defaults.min = 0;
 
   $("input.default").superNumber();
 
-  $("input.step_5").superNumber({
-    step: .6,
-    max: 45,
-    precision: 2,
-    scale: 2,
+  $("input.single_digits").superNumber({
+    min: 1,
+    max: 9,
     loop: true
   });
+
+  $("input.money").superNumber({
+    scale: 2,
+    step: 0.05,
+    formatInput: function(val) {
+      return val.replace("$", "");
+    },
+    formatOutput: function(val) {
+      return "$" + val;
+    }
+  });
+
+  $("input.hours").superNumber({
+    min: 1,
+    max: 12,
+    loop: true
+  });
+
+  $("input.minutes").superNumber({
+    min: 0,
+    max: 59,
+    precision: 2,
+    loop: true
+  });
+
 });

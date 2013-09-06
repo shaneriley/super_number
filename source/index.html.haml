@@ -1,6 +1,26 @@
-%form(action="" method="post")
-  %fieldset
-    %p
-      %input.default(type="text")
-    %p
-      %input.step_5(type="text")
+%h1 SuperNumber
+%h2 A jQuery plugin for incrementing all the numbers.
+
+%form
+  %dl
+    %dt
+      %label Default settings
+    %dd
+      %input.default(type="text" value="0")
+  %dl
+    %dt
+      %label 1 through 9, looping
+    %dd
+      %input.single_digits(type="text" value="0")
+  %dl
+    %dt
+      %label Every 5 cents
+    %dd
+      %input.money(type="text" value="$6.95")
+  %dl
+    %dt
+      %label Every 5 minutes
+    %dd
+      %input.hours(type="text" value="12")
+      %span :
+      %input.minutes(type="text" value="00")
