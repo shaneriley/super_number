@@ -42,17 +42,17 @@ test "controls disappear on blur", ->
   $el.shouldHaveValue("0")
 
 test "increment button increments by 1 when clicked", ->
-  $el = sn.init(0).fire().focus()
+  $el = sn.init(0).fire()
   sn.up()
   $el.shouldHaveValue("1")
 
 test "decrement button decrements by 1 when clicked", ->
-  $el = sn.init(0).fire().focus()
+  $el = sn.init(0).fire()
   sn.down()
   $el.shouldHaveValue("-1")
 
 test "treat blank input as 0", ->
-  $el = sn.init().fire().focus()
+  $el = sn.init().fire()
   $el.blur()
   $el.shouldHaveValue("0")
   sn.up()
