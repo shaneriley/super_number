@@ -1,0 +1,15 @@
+---
+layout: false
+---
+
+!!! 5
+%html(lang="en-US")
+  %head
+    %meta(charset="UTF-8")
+    = stylesheet_link_tag "qunit-1.12.0"
+    = javascript_include_tag "jquery.min", "qunit-1.12.0", "jquery.super_number", "suite"
+    %title jQuery.super_number Test Suite
+  %body
+    #qunit
+    #qunit-fixture
+      %input#test_input(type="text")

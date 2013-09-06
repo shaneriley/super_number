@@ -32,6 +32,7 @@
         });
     },
     formatOutput: function(val) { return val; },
+    formatInput: function(val) { return val; },
     setScale: function(val) {
       var s = this,
           multiple = +("1" + Array(s.scale + 1).join(0)),
@@ -42,34 +43,60 @@
       });
       return chopped;
     },
-    setPrecision: function(val) {
-      var whole_num = val.replace(/\..*/, ""),
-          decimal = val.replace(/\d*\.?/, "");
+    setPrecision: function(v) {
+      var val = v.replace(/\-/, ""),
+          neg = v.length == val.length ? "" : "-",
+          whole_num = val.replace(/\..*/, ""),
+          decimal = val.replace(/-?\d*\.?/, "");
       if (whole_num.length < this.precision) {
         whole_num = Array(this.precision - whole_num.length + 1).join("0") + whole_num;
       }
-      return whole_num + (decimal ? "." + decimal : "");
+      return neg + whole_num + (decimal ? "." + decimal : "");
     },
     keyup: function(e) {
       if (e.which !== 38 && e.which !== 40) { return; }
       var s = $(this).data(super_number.name);
       s.controls["$" + (e.which === 38 ? "in" : "de") + "crement"].mouseup();
     },
-    click: function(e) {
+    changeValue: function(e) {
       e.preventDefault();
       var $e = $(this),
           s = $e.data(super_number.name),
-          v = +s.$el.val(),
-          change = ($e.hasClass("increment") ? "+" : "-") + s.step,
-          diff = v + +change;
-      if (diff > s.max || diff < s.min) {
-        if (!s.loop) { return; }
+          multiple = s.scale != 0 ? Math.pow(10, s.scale) : 1,
+          v = Math.round(multiple * s.formatInput(s.$el.val()) * multiple) / multiple,
+          step  = multiple * s.step,
+          mod = v % step,
+          val_up = v + (mod ? (step - mod) : step),
+          val_down = v - (mod ? mod : step),
+          new_val;
+      if (!$.isNumeric(v)) {
+        s.$el.val(s.formatOutput(s.setPrecision(s.setScale(0)))).change();
+        return;
+      };
+      if ($e.is(s.$el)) {
+        if (mod && s.force_step) {
+          new_val = ((val_up - v) < (v - val_down)) ? val_up : val_down;
+        } else {
+          new_val = v;
+        }
+      } else {
+        var dir = $e.hasClass("increment"),
+            step_val = dir ? val_up : val_down,
+            calc_val = v + step * (dir ? 1 : -1);
+        mod = Math.round((calc_val % step) * multiple) / multiple;
+        new_val = mod ? step_val : calc_val;
+      }
+      new_val = new_val / multiple;
+      if (new_val > s.max || new_val < s.min) {
+        if (!s.loop) {
+          new_val = new_val > s.max ? s.max : s.min;
+        }
         else {
-          diff = diff > s.max ? s.min : s.max;
+          new_val = new_val > s.max ? s.min : s.max;
         }
       }
-      diff = s.setPrecision(s.setScale(diff));
-      s.$el.val(s.formatOutput(diff)).change();
+      new_val = s.setPrecision(s.setScale(new_val));
+      s.$el.val(s.formatOutput(new_val)).change();
     },
     toggle: function(e) {
       var $e = $(this),
@@ -96,9 +123,10 @@
       s.createElements();
       s.positionControls();
       s.$el.on("keydown." + s.name + ".keyup", s.keyup);
-      s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.click)
+      s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.changeValue)
         .on("mousedown." + s.name + ", click." + s.name, "a", false);
       s.hide_on_blur && s.$el.on("focus." + s.name + ".toggle, blur." + s.name + ".toggle", s.toggle);
+      s.force_step && s.$el.on("blur." + s.name, s.changeValue);
     }
   };
 
@@ -129,6 +157,7 @@
       max: undefined,
       min: undefined,
       step: 1,
+      force_step: true,
       hide_on_blur: true,
       precision: 0,
       scale: 0,
