@@ -1,5 +1,5 @@
-/* jQuery superNumber version 1.1.1
- * (c) 2012 Shane Riley
+/* jQuery superNumber version 1.2.0
+ * by Shane Riley
  * Original source at https://github.com/shaneriley/super_number
  * Licensed under GPL 2.0 (http://www.gnu.org/licenses/gpl-2.0.html)
  * Source hosted at http://www.gnu.org/licenses/gpl-2.0.html
@@ -169,6 +169,8 @@
       }
       return $els;
     };
+
+    $.fn[plugin.name].version = "1.2.0";
 
     $.fn[plugin.name].defaults = {
       max: undefined,
