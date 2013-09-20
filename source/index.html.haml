@@ -7,16 +7,41 @@
       %label Default settings
     %dd
       %input.default(type="text" value="0")
+  %code
+    %pre
+      :plain
+        $("input.default").superNumber();
   %dl
     %dt
       %label 1 through 9, looping
     %dd
       %input.single_digits(type="text" value="0")
+  %code
+    %pre
+      :plain
+        $("input.single_digits").superNumber({
+          min: 1,
+          max: 9,
+          loop: true
+        });
   %dl
     %dt
       %label Every 5 cents
     %dd
       %input.money(type="text" value="$6.95")
+  %code
+    %pre
+      :plain
+        $("input.money").superNumber({
+          scale: 2,
+          step: 0.05,
+          formatInput: function(val) {
+            return val.replace("$", "");
+          },
+          formatOutput: function(val) {
+            return "$" + val;
+          }
+        });
   %dl
     %dt
       %label Every 5 minutes
@@ -24,3 +49,15 @@
       %input.hours(type="text" value="12")
       %span :
       %input.minutes(type="text" value="00")
+  %code
+    %pre
+      :plain
+        $("input.minutes").superNumber({
+          min: 0,
+          max: 59,
+          precision: 2,
+          loop: true
+        });
+
+.actions
+  = link_to "Download on Github", "#"
