@@ -1,11 +1,17 @@
 @import "mixins"
 
+html
+  height: 100%
+
 body
   font: normal 14px "Dosis", Helvetica, Arial, sans-serif
-  color: #fff
-  background: #22272f
+  color: #07609b
+  background: #aedaf7
   -webkit-font-smoothing: antialiased
+  height: 100%
   > section
+    position: relative
+    z-index: 2
     margin: 0 100px
 
 h1
@@ -14,11 +20,11 @@ h1
   text-align: center
   margin: 50px 0 10px 0
 h2
-  font-weight: 200
+  font-weight: 300
   font-size: 30px
   text-align: center
-  margin: 0 0 100px 0
-  color: #7e8b9f
+  margin: 0 0 50px 0
+  color: #d7472b
 
 dl
   text-align: center
@@ -84,7 +90,7 @@ code
   max-width: 340px
   margin: 0 auto
   pre
-    background: rgba(0,0,0,.2)
+    background: rgba(255,255,255,.4)
     padding: 20px
     margin: 20px auto 40px auto
 
@@ -96,12 +102,32 @@ code
     display: block
     padding: 10px
     font-size: 30px
-    color: #22272f
-    background: #72d1d2
+    color: #fff
+    background: #d7472b
     transition: background linear .2s
     -webkit-transition: background linear .2s
     -moz-transition: background linear .2
     text-decoration: none
     &:hover
-      background: #5de0e2
-    
+      background: #0a93ed
+
+@-webkit-keyframes drift
+  from
+    left: 3000px
+  to
+    left: -3000px
+
+#clouds
+  overflow: hidden
+  position: absolute
+  height: 100%
+  width: 100%
+  z-index: 1
+  .cloud
+    position: absolute
+    opacity: 0.3
+    span
+      display: block
+      position: absolute
+      border-radius: 1000px
+      background: #fff
