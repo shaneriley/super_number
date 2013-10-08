@@ -9,6 +9,12 @@
 
   var super_number = {
     name: "superNumber",
+    detectDataAttributes: function(attrs) {
+      var s = this;
+      $.each(attrs, function(k, v) {
+        s[v] = s.$el.data(v) || s[v];
+      });
+    },
     createElements: function() {
       var s = this,
           container_opts = $.extend({}, s.container),
@@ -23,13 +29,6 @@
         s.hide_on_blur && $e.hide();
         s.controls["$" + c] = $e.appendTo($c);
       });
-    },
-    positionControls: function() {
-      var s = this;
-      s.controls.$increment.add(s.controls.$decrement)
-        .css({
-          left: (s.$el.closest("." + s.container["class"]).outerWidth() - s.controls.$increment.outerWidth()) / 2
-        });
     },
     formatOutput: function(val) { return val; },
     formatInput: function(val) { return val; },
@@ -88,11 +87,13 @@
       }
       new_val = new_val / multiple;
       if (new_val > s.max || new_val < s.min) {
+        var is_max = new_val > s.max;
+        s.$el.trigger(s.name + "." + (is_max ? "max" : "min") + "Reached");
         if (!s.loop) {
-          new_val = new_val > s.max ? s.max : s.min;
+          new_val = is_max ? s.max : s.min;
         }
         else {
-          new_val = new_val > s.max ? s.min : s.max;
+          new_val = is_max ? s.min : s.max;
         }
       }
       new_val = s.setPrecision(s.setScale(new_val));
@@ -120,8 +121,8 @@
         $.error("jQuery." + s.name + ": one or more elements are not inputs and will not be initialized");
         return;
       }
+      s.detectDataAttributes(["max", "min", "step", "precision", "scale"]);
       s.createElements();
-      s.positionControls();
       s.$el.on("keydown." + s.name + ".keyup", s.keyup);
       s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.changeValue)
         .on("mousedown." + s.name + ", click." + s.name, "a", false);
