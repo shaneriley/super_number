@@ -9,6 +9,12 @@
 
   var super_number = {
     name: "superNumber",
+    detectDataAttributes: function(attrs) {
+      var s = this;
+      $.each(attrs, function(k, v) {
+        s[v] = s.$el.data(v) || s[v];
+      });
+    },
     createElements: function() {
       var s = this,
           container_opts = $.extend({}, s.container),
@@ -122,6 +128,7 @@
         $.error("jQuery." + s.name + ": one or more elements are not inputs and will not be initialized");
         return;
       }
+      s.detectDataAttributes(["max", "min", "step", "precision", "scale"]);
       s.createElements();
       s.positionControls();
       s.$el.on("keydown." + s.name + ".keyup", s.keyup);
