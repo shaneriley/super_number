@@ -30,13 +30,6 @@
         s.controls["$" + c] = $e.appendTo($c);
       });
     },
-    positionControls: function() {
-      var s = this;
-      s.controls.$increment.add(s.controls.$decrement)
-        .css({
-          left: (s.$el.closest("." + s.container["class"]).outerWidth() - s.controls.$increment.outerWidth()) / 2
-        });
-    },
     formatOutput: function(val) { return val; },
     formatInput: function(val) { return val; },
     setScale: function(val) {
@@ -130,7 +123,6 @@
       }
       s.detectDataAttributes(["max", "min", "step", "precision", "scale"]);
       s.createElements();
-      s.positionControls();
       s.$el.on("keydown." + s.name + ".keyup", s.keyup);
       s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.changeValue)
         .on("mousedown." + s.name + ", click." + s.name, "a", false);
