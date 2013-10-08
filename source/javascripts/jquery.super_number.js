@@ -88,11 +88,13 @@
       }
       new_val = new_val / multiple;
       if (new_val > s.max || new_val < s.min) {
+        var is_max = new_val > s.max;
+        s.$el.trigger(s.name + "." + (is_max ? "max" : "min") + "Reached");
         if (!s.loop) {
-          new_val = new_val > s.max ? s.max : s.min;
+          new_val = is_max ? s.max : s.min;
         }
         else {
-          new_val = new_val > s.max ? s.min : s.max;
+          new_val = is_max ? s.min : s.max;
         }
       }
       new_val = s.setPrecision(s.setScale(new_val));

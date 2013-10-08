@@ -15,6 +15,10 @@ sn =
     @data = @$el.data("superNumber")
     @$el
 
+$.fn.shouldContain = (text) ->
+  equal @.text(), text, "#{@.selector} should contain the text #{text}"
+  @
+
 $.fn.shouldHaveValue = (val) ->
   equal @.val(), val, "#{@.selector} should have a value of #{val}"
   @
@@ -177,3 +181,21 @@ test "formatOutput and formatInput", ->
       val.replace("$", "")
   sn.up()
   $el.shouldHaveValue("$12.00")
+
+test "minReached and maxReached events", ->
+  $el = sn.init(1).fire
+    min: 0
+    max: 2
+  $message = $("<p />").addClass("message");
+  $el.on("superNumber.maxReached", ->
+    $message.text("Max Reached")
+  )
+  $el.on("superNumber.minReached", ->
+    $message.text("Min Reached")
+  )
+  sn.up()
+  $message.shouldContain("");
+  sn.up()
+  $message.shouldContain("Max Reached");
+  sn.down(3)
+  $message.shouldContain("Min Reached");
