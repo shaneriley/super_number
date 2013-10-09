@@ -182,6 +182,13 @@ test "formatOutput and formatInput", ->
   sn.up()
   $el.shouldHaveValue("$12.00")
 
+test "increment and decrement events", ->
+  $el = sn.init(2).fire()
+  $el.trigger("superNumber.increment")
+  $el.shouldHaveValue(3)
+  $el.trigger("superNumber.decrement")
+  $el.shouldHaveValue(2)
+
 test "minReached and maxReached events", ->
   $el = sn.init(1).fire
     min: 0

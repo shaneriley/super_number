@@ -32,6 +32,12 @@
     },
     formatOutput: function(val) { return val; },
     formatInput: function(val) { return val; },
+    increment: function() {
+      $(this).parent().find(".increment").trigger("mouseup");
+    },
+    decrement: function() {
+      $(this).parent().find(".decrement").trigger("mouseup");
+    },
     setScale: function(val) {
       var s = this,
           multiple = +("1" + Array(s.scale + 1).join(0)),
@@ -55,7 +61,7 @@
     keyup: function(e) {
       if (e.which !== 38 && e.which !== 40) { return; }
       var s = $(this).data(super_number.name);
-      s.controls["$" + (e.which === 38 ? "in" : "de") + "crement"].mouseup();
+      s.trigger(super_number.name + "." + (e.which === 38 ? "in" : "de") + "crement");
     },
     changeValue: function(e) {
       e.preventDefault();
@@ -124,6 +130,8 @@
       s.detectDataAttributes(["max", "min", "step", "precision", "scale"]);
       s.createElements();
       s.$el.on("keydown." + s.name + ".keyup", s.keyup);
+      s.$el.on(s.name + ".increment", s.increment);
+      s.$el.on(s.name + ".decrement", s.decrement);
       s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.changeValue)
         .on("mousedown." + s.name + ", click." + s.name, "a", false);
       s.hide_on_blur && s.$el.on("focus." + s.name + ".toggle, blur." + s.name + ".toggle", s.toggle);
