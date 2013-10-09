@@ -9,7 +9,6 @@
 
   var super_number = {
     name: "superNumber",
-    dataAttributes: ["max", "min", "step", "precision", "scale"],
     detectDataAttributes: function(attrs) {
       var s = this;
       $.each(attrs, function(i, v) {
@@ -174,6 +173,7 @@
     $.fn[plugin.name].version = "1.2.0";
 
     $.fn[plugin.name].defaults = {
+      dataAttributes: ["max", "min", "step", "precision", "scale"],
       max: undefined,
       min: undefined,
       step: 1,
