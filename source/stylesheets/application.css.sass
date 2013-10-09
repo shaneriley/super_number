@@ -1,30 +1,46 @@
 @import "mixins"
 
 html
-  height: 100%
+  min-height: 100%
 
 body
   font: normal 14px "Dosis", Helvetica, Arial, sans-serif
   color: #07609b
   background: #aedaf7
   -webkit-font-smoothing: antialiased
-  height: 100%
+  -webkit-text-size-adjust: none
+  min-height: 100%
   > section
     position: relative
     z-index: 2
-    margin: 0 100px
+    margin: 0 50px
+    +max-width
+      margin: 0 20px
+    +max-width(480)
+      margin: 0 10px
 
 h1
   font-weight: 200
   font-size: 130px
   text-align: center
   margin: 50px 0 10px 0
+  +max-width
+    font-size: 80px
+  +max-width(480)
+    font-size: 50px
+    margin-top: 20px
 h2
   font-weight: 300
   font-size: 30px
   text-align: center
   margin: 0 0 50px 0
   color: #d7472b
+  +max-width
+    font-size: 20px
+  +max-width(480)
+    font-weight: 400
+    font-size: 16px
+    margin-bottom: 30px
 
 dl
   text-align: center
@@ -52,6 +68,7 @@ dl
       -webkit-appearance: none
       background: #fff
       text-align: center
+      border-radius: 0
       &:focus
         outline: none
       &.money
@@ -88,16 +105,22 @@ dl
 
 code
   display: block
-  max-width: 340px
+  max-width: 500px
   margin: 0 auto
   pre
     background: rgba(255,255,255,.4)
     padding: 20px
     margin: 20px auto 40px auto
+    overflow-x: auto
+  +max-width(480)
+    font-size: 12px
+    pre
+      padding: 10px
 
 .actions
-  max-width: 340px
-  margin: 40px auto 80px auto
+  max-width: 500px
+  margin: 0 auto
+  padding: 40px 0 80px 0
   text-align: center
   a
     display: block
@@ -120,9 +143,11 @@ code
 
 #clouds
   overflow: hidden
-  position: absolute
-  height: 100%
-  width: 100%
+  position: fixed
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
   z-index: 1
   .cloud
     position: absolute

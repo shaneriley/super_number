@@ -96,6 +96,9 @@
     font-family: '#{$font_name}'
     src: url('#{$font_path}.eot')
     src: url('#{$font_path}.eot?iefix') format('eot'), url('#{$font_path}.woff') format('woff'), url('#{$font_path}.ttf') format('truetype'), url('#{$font_path}.svg#webfont') format('svg')
+= max-width($width: 720)
+  @media screen and (max-width: #{$width}px)
+    @content
 
 = input($width: 218px)
   width: $width
