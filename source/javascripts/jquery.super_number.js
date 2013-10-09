@@ -12,7 +12,7 @@
     detectDataAttributes: function(attrs) {
       var s = this;
       $.each(attrs, function(k, v) {
-        s[v] = s.$el.data(v) || s[v];
+        s[v] = s.$el.data(v) != undefined ? s.$el.data(v) : s[v];
       });
     },
     createElements: function() {
