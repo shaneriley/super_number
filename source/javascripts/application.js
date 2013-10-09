@@ -29,7 +29,12 @@ $(function() {
     min: 0,
     max: 59,
     precision: 2,
+    step: 5,
     loop: true
+  }).on("superNumber.maxReached", function() {
+    $("input.hours").trigger("superNumber.increment");
+  }).on("superNumber.minReached", function() {
+    $("input.hours").trigger("superNumber.decrement");
   });
 
   var clouds = {
