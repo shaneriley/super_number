@@ -1,4 +1,4 @@
-# jQuery superNumber v1.2.0
+# jQuery superNumber v1.2.5
 
 A tiny plugin that adds spinner-like controls to text inputs. Licensed under GPL 2.0 [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -16,6 +16,8 @@ this:
 </div>
 ```
 
+Positioning of the anchor controls is now left to CSS or outside scripting as of v1.2.5.
+
 ## Options
 
 Technically, everything is overridable, right down to the initializer method,
@@ -23,10 +25,15 @@ but the options you're likely to override are:
 
 ```javascript
 {
+  dataAttributes: [
+    "max", "min", "step",
+    "precision", "scale"
+  ],                                 // Data attributes that will be mapped to take the place of native number input attributes
   name: "superNumber",               // Name used for the plugin method
   max: undefined,                    // Max value for input
   min: undefined,                    // Min value for input
   step: 1,                           // Amount to change value by
+  force_step: true,                  // Conform to element step amount when input blurred
   loop: false,                       // Exceeding min/max loops to opposite end
   precision: 0,                      // Number of integer places
   scale: 0,                          // Number of decimal places
@@ -47,6 +54,16 @@ but the options you're likely to override are:
   },
   hide_on_blur: true                 // Hide controls when input loses focus
 }
+```
+
+Two custom events can be bound to the input and triggered when the min or max
+values are reached. To bind these, use the plugin name with namespaces of
+`minReached` and `maxReached`.
+
+```javascript
+$(".super_input").on("superNumber.maxReached", function() {
+  $(this).next(".notice").text("Maxed out!");
+});
 ```
 
 You can also call a teardown method on one or more elements by passing a string
