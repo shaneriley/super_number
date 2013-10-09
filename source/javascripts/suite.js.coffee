@@ -158,6 +158,17 @@ test "loop", ->
   sn.down(3)
   $el.shouldHaveValue(3)
 
+test "loop with step when max & step don't match up", ->
+  $el = sn.init(0).fire
+    min: 0
+    max: 59
+    step: 5
+    loop: true
+  sn.down()
+  $el.shouldHaveValue(55)
+  sn.up(3)
+  $el.shouldHaveValue(10)
+
 test "snap to min or max if looping to bottom off-step", ->
   $el = sn.init(4).fire
     step: 5

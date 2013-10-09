@@ -38,6 +38,14 @@
     decrement: function() {
       $(this).parent().find(".decrement").trigger("mouseup");
     },
+    getMaxStep: function(val, step) {
+      var mod = val % step;
+      return mod ? val - mod : val;
+    },
+    getMinStep: function(val, step) {
+      var mod = val % step;
+      return mod ? val + mod : val;
+    },
     setScale: function(val) {
       var s = this,
           multiple = +("1" + Array(s.scale + 1).join(0)),
@@ -96,10 +104,10 @@
         var is_max = new_val > s.max;
         s.$el.trigger(s.name + "." + (is_max ? "max" : "min") + "Reached");
         if (!s.loop) {
-          new_val = is_max ? s.max : s.min;
+          new_val = is_max ? s.getMaxStep(s.max, s.step) : s.getMinStep(s.min, s.step);
         }
         else {
-          new_val = is_max ? s.min : s.max;
+          new_val = is_max ? s.getMinStep(s.min, s.step) : s.getMaxStep(s.max, s.step);
         }
       }
       new_val = s.setPrecision(s.setScale(new_val));
