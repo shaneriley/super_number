@@ -14,7 +14,7 @@ sn =
     $e.keyCode = $e.which = k
     $el.trigger($e)
   init: (val) ->
-    @$el = $("#test_input").val(val);
+    @$el = $("#test_input").val(val)
     @
   fire: (opts) ->
     @$el.superNumber(opts)
@@ -220,7 +220,7 @@ test "minReached and maxReached events", ->
   $el = sn.init(1).fire
     min: 0
     max: 2
-  $message = $("<p />").addClass("message");
+  $message = $("<p />").addClass("message")
   $el.on("maxReached.superNumber", ->
     $message.text("Max Reached")
   )
@@ -228,8 +228,8 @@ test "minReached and maxReached events", ->
     $message.text("Min Reached")
   )
   sn.up()
-  $message.shouldContain("");
+  $message.shouldContain("")
   sn.up()
-  $message.shouldContain("Max Reached");
+  $message.shouldContain("Max Reached")
   sn.down(3)
-  $message.shouldContain("Min Reached");
+  $message.shouldContain("Min Reached")
