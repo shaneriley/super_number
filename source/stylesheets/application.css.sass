@@ -4,7 +4,7 @@ html
   min-height: 100%
 
 body
-  font: normal 14px "Dosis", Helvetica, Arial, sans-serif
+  font: normal 14px "Titillium Web", Helvetica, Arial, sans-serif
   color: #07609b
   background: #aedaf7
   -webkit-font-smoothing: antialiased
@@ -21,9 +21,10 @@ body
 
 h1
   font-weight: 200
-  font-size: 130px
+  font-size: 110px
+  line-height: 100%
   text-align: center
-  margin: 50px 0 10px 0
+  margin: 50px 0 20px 0
   +max-width
     font-size: 80px
   +max-width(480)
@@ -120,7 +121,7 @@ code
 .actions
   max-width: 500px
   margin: 0 auto
-  padding: 40px 0 80px 0
+  padding: 20px 0
   text-align: center
   a
     display: block
@@ -134,6 +135,15 @@ code
     text-decoration: none
     &:hover
       background: #0a93ed
+
+.author
+  text-align: center
+  font-size: 14px
+  clear: both
+  padding: 0 0 80px 0
+  a
+    text-decoration: none
+    color: #0a93ed
 
 @-webkit-keyframes drift
   from

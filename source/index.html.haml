@@ -1,5 +1,5 @@
 %h1 SuperNumber
-%h2 A jQuery plugin for incrementing all the numbers.
+%h2 A jQuery plugin for easily incrementing values.
 
 %form
   %dl
@@ -64,6 +64,10 @@
           $("input.hours").trigger("superNumber.decrement");
         });
 .actions
-  = link_to "Download on Github", "#"
-
-
+  = link_to "Download on Github", "https://github.com/shaneriley/super_number/"
+.author
+  %p
+    created by
+    = link_to "@shaneriley", "http://twitter.com/shaneriley"
+    and
+    = link_to "@camerondaigle", "http://twitter.com/camerondaigle"
