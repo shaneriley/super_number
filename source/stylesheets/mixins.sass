@@ -77,10 +77,34 @@
   $color4: ie_color_fix($color4)
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$color1}, endColorstr=#{$color4},GradientType=0 )
   -ms-filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#{$color1}, endColorstr=#{$color4})
-= transition($args)
+= transition($args...)
   -webkit-transition: $args
   -moz-transition: $args
   -o-transition: $args
+= transition_property($prop)
+  -webkit-transition-property: $prop
+  -moz-transition-property: $prop
+  -o-transition-property: $prop
+= transform($args...)
+  -webkit-transform: $args
+  -moz-transform: $args
+  -o-transform: $args
+  transform: $args
+= animation($args...)
+  -webkit-animation: $args
+  -moz-animation: $args
+  animation: $args
+= rotate($deg)
+  -webkit-transform: rotate(#{$deg}deg)
+  -moz-transform: rotate(#{$deg}deg)
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=#{$deg / 90})
+= keyframes($name)
+  @-webkit-keyframes #{$name}
+    @content
+  @-moz-keyframes #{$name}
+    @content
+  @keyframes #{$name}
+    @content
 = rotate($deg)
   -webkit-transform: rotate(#{$deg}deg)
   -moz-transform: rotate(#{$deg}deg)
@@ -99,6 +123,14 @@
 = max-width($width: 720)
   @media screen and (max-width: #{$width}px)
     @content
+
++keyframes(pulse)
+  0%
+    opacity: 0
+  50%
+    opacity: 1
+  100%
+    opacity: 0
 
 = input($width: 218px)
   width: $width
