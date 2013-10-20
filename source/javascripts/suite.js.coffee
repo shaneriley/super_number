@@ -7,6 +7,12 @@ sn =
   down: (num) ->
     num ?= 1
     @data.controls.$decrement.trigger("mouseup") while num--
+  keydown: (k, msg, $el) ->
+    $el ?= @$el
+    if msg then ok true, "I press #{msg}"
+    $e = $.Event('keydown.superNumber')
+    $e.keyCode = $e.which = k
+    $el.trigger($e)
   init: (val) ->
     @$el = $("#test_input").val(val);
     @
@@ -67,6 +73,16 @@ test "convert non-numeric input gracefully to 0", ->
   $el.val("Alfred Molina")
   sn.up()
   $el.shouldHaveValue("0")
+
+module "Keyboard Support"
+
+test "Up and down arrow should increment and decrement", ->
+  $el = sn.init().fire()
+  sn.keydown(38, "up arrow")
+  $el.shouldHaveValue("1")
+  sn.keydown(40, "down arrow")
+  sn.keydown(40, "down arrow")
+  $el.shouldHaveValue("-1")
 
 module "Options"
 

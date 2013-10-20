@@ -66,10 +66,10 @@
       }
       return neg + whole_num + (decimal ? "." + decimal : "");
     },
-    keyup: function(e) {
+    keydown: function(e) {
       if (e.which !== 38 && e.which !== 40) { return; }
       var s = $(this).data(super_number.name);
-      s.trigger(super_number.name + "." + (e.which === 38 ? "in" : "de") + "crement");
+      s.$el.trigger(super_number.name + "." + (e.which === 38 ? "in" : "de") + "crement");
     },
     changeValue: function(e) {
       e.preventDefault();
@@ -137,9 +137,9 @@
       }
       s.detectDataAttributes(["max", "min", "step", "precision", "scale"]);
       s.createElements();
-      s.$el.on("keydown." + s.name + ".keyup", s.keyup);
-      s.$el.on(s.name + ".increment", s.increment);
-      s.$el.on(s.name + ".decrement", s.decrement);
+      s.$el.on("keydown." + s.name, s.keydown);
+      s.$el.on("increment." + s.name, s.increment);
+      s.$el.on("decrement." + s.name, s.decrement);
       s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.changeValue)
         .on("mousedown." + s.name + ", click." + s.name, "a", false);
       s.hide_on_blur && s.$el.on("focus." + s.name + ".toggle, blur." + s.name + ".toggle", s.toggle);
