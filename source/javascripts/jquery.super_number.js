@@ -102,7 +102,7 @@
       new_val = new_val / multiple;
       if (new_val > s.max || new_val < s.min) {
         var is_max = new_val > s.max;
-        s.$el.trigger(s.name + "." + (is_max ? "max" : "min") + "Reached");
+        s.$el.trigger((is_max ? "max" : "min") + "Reached." + s.name);
         if (!s.loop) {
           new_val = is_max ? s.getMaxStep(s.max, s.step) : s.getMinStep(s.min, s.step);
         }

@@ -31,9 +31,9 @@ $(function() {
     precision: 2,
     step: 5,
     loop: true
-  }).on("superNumber.maxReached", function() {
+  }).on("maxReached.superNumber", function() {
     $("input.hours").trigger("superNumber.increment");
-  }).on("superNumber.minReached", function() {
+  }).on("minReached.superNumber", function() {
     $("input.hours").trigger("superNumber.decrement");
   });
 

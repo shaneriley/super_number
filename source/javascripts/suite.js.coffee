@@ -221,10 +221,10 @@ test "minReached and maxReached events", ->
     min: 0
     max: 2
   $message = $("<p />").addClass("message");
-  $el.on("superNumber.maxReached", ->
+  $el.on("maxReached.superNumber", ->
     $message.text("Max Reached")
   )
-  $el.on("superNumber.minReached", ->
+  $el.on("minReached.superNumber", ->
     $message.text("Min Reached")
   )
   sn.up()
