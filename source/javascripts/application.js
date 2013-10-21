@@ -32,9 +32,9 @@ $(function() {
     step: 5,
     loop: true
   }).on("maxReached.superNumber", function() {
-    $("input.hours").trigger("superNumber.increment");
+    $("input.hours").trigger("increment.superNumber");
   }).on("minReached.superNumber", function() {
-    $("input.hours").trigger("superNumber.decrement");
+    $("input.hours").trigger("decrement.superNumber");
   });
 
   var numbers = {
