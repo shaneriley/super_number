@@ -211,9 +211,9 @@ test "formatOutput and formatInput", ->
 
 test "increment and decrement events", ->
   $el = sn.init(2).fire()
-  $el.trigger("superNumber.increment")
+  $el.trigger("increment.superNumber")
   $el.shouldHaveValue(3)
-  $el.trigger("superNumber.decrement")
+  $el.trigger("decrement.superNumber")
   $el.shouldHaveValue(2)
 
 test "minReached and maxReached events", ->

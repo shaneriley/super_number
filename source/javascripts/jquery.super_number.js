@@ -69,7 +69,7 @@
     keydown: function(e) {
       if (e.which !== 38 && e.which !== 40) { return; }
       var s = $(this).data(super_number.name);
-      s.$el.trigger(super_number.name + "." + (e.which === 38 ? "in" : "de") + "crement");
+      s.$el.trigger((e.which === 38 ? "in" : "de") + "crement." + super_number.name);
     },
     changeValue: function(e) {
       e.preventDefault();
@@ -125,7 +125,7 @@
         $.each(["in", "de"], function(j, v) {
           s.controls["$" + v + "crement"].remove();
         });
-        $els.unwrap("." + s.container["class"]).unbind("." + s.name).removeData(s.name);
+        $els.unwrap("." + s.container["class"]).unbind(s.name).removeData(s.name);
       });
     },
     init: function() {
