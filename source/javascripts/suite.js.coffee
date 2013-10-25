@@ -7,6 +7,12 @@ sn =
   down: (num) ->
     num ?= 1
     @data.controls.$decrement.trigger("mouseup") while num--
+  keydown: (k, msg, $el) ->
+    $el ?= @$el
+    if msg then ok true, "I press #{msg}"
+    $e = $.Event('keydown.superNumber')
+    $e.keyCode = $e.which = k
+    $el.trigger($e)
   init: (val) ->
     @$el = $("#test_input").val(val)
     @
@@ -67,6 +73,16 @@ test "convert non-numeric input gracefully to 0", ->
   $el.val("Alfred Molina")
   sn.up()
   $el.shouldHaveValue("0")
+
+module "Keyboard Support"
+
+test "Up and down arrow should increment and decrement", ->
+  $el = sn.init().fire()
+  sn.keydown(38, "up arrow")
+  $el.shouldHaveValue("1")
+  sn.keydown(40, "down arrow")
+  sn.keydown(40, "down arrow")
+  $el.shouldHaveValue("-1")
 
 module "Options"
 
@@ -158,6 +174,17 @@ test "loop", ->
   sn.down(3)
   $el.shouldHaveValue(3)
 
+test "loop with step when max & step don't match up", ->
+  $el = sn.init(0).fire
+    min: 0
+    max: 59
+    step: 5
+    loop: true
+  sn.down()
+  $el.shouldHaveValue(55)
+  sn.up(3)
+  $el.shouldHaveValue(10)
+
 test "snap to min or max if looping to bottom off-step", ->
   $el = sn.init(4).fire
     step: 5
@@ -182,15 +209,22 @@ test "formatOutput and formatInput", ->
   sn.up()
   $el.shouldHaveValue("$12.00")
 
+test "increment and decrement events", ->
+  $el = sn.init(2).fire()
+  $el.trigger("increment.superNumber")
+  $el.shouldHaveValue(3)
+  $el.trigger("decrement.superNumber")
+  $el.shouldHaveValue(2)
+
 test "minReached and maxReached events", ->
   $el = sn.init(1).fire
     min: 0
     max: 2
-  $message = $("<p />").addClass("message")
-  $el.on("superNumber.maxReached", ->
+  $message = $("<p />").addClass("message");
+  $el.on("maxReached.superNumber", ->
     $message.text("Max Reached")
   )
-  $el.on("superNumber.minReached", ->
+  $el.on("minReached.superNumber", ->
     $message.text("Min Reached")
   )
   sn.up()

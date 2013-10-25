@@ -1,9 +1,15 @@
 @import "mixins"
 
+html
+  min-height: 100%
+
 body
-  font: normal 14px Helvetica, Arial, sans-serif
-  color: #181818
-  background: #ae1f23
+  font: normal 14px "Titillium Web", Helvetica, Arial, sans-serif
+  color: #4a4a3e
+  background: #e1e1dd
+  -webkit-font-smoothing: antialiased
+  -webkit-text-size-adjust: none
+  min-height: 100%
   > section
     width: 880px
     padding: 40px
@@ -35,11 +41,151 @@ p + p
     line-height: 20px
     text-align: center
     color: #ffffff
+    position: relative
+    z-index: 2
+    margin: 0 50px
+    +max-width
+      margin: 0 20px
+    +max-width(480)
+      margin: 0 10px
+
+h1
+  font-weight: 200
+  font-size: 110px
+  line-height: 100%
+  text-align: center
+  margin: 50px 0 20px 0
+  +max-width
+    font-size: 80px
+  +max-width(480)
+    font-size: 50px
+    margin-top: 20px
+h2
+  font-weight: 300
+  font-size: 30px
+  text-align: center
+  margin: 0 0 50px 0
+  color: #d7472b
+  +max-width
+    font-size: 20px
+  +max-width(480)
+    font-weight: 400
+    font-size: 16px
+    margin-bottom: 30px
+
+dl
+  text-align: center
+  dt
+    display: inline-block
+    text-align: right
+    padding: 0 20px 0 0
+    label
+      font-size: 24px
+      font-weight: normal
+      line-height: 40px
+  dd
+    display: inline-block
+    span
+      font-size: 24px
+      font-weight: bold
+      margin: 0 5px
+    input[type="text"]
+      width: 40px
+      height: 40px
+      padding: 2px 5px
+      font: normal 24px "Dosis", Helvetica, Arial, sans-serif
+      color: #22272f
+      border: none
+      -webkit-appearance: none
+      background: #fff
+      text-align: center
+      border-radius: 0
+      &:focus
+        outline: none
+      &.money
+        width: 80px
+    .super_number
+      display: inline-block
+      position: relative
+      a.increment,
+      a.decrement
+        font-family: Helvetica, Arial, sans-serif
+        position: absolute
+        z-index: 1
+        left: 0
+        right: 0
+        height: 30px
+        font-weight: 200
+        text-align: center
+        color: #fff
+        text-decoration: none
+        font-size: 30px
+        line-height: 26px
+        background: #d7472b
+        transition: background linear .2s
+        -webkit-transition: background linear .2s
+        -moz-transition: background linear .2
+        &:hover
+          background: #f4401d
+      a.increment
+        bottom: 100%
+        +border-top-radius(3px)
+      a.decrement
+        top: 100%
+        +border-bottom-radius(3px)
+
+code
+  display: block
+  max-width: 500px
+  margin: 0 auto
+  pre
+    background: rgba(255,255,255,.4)
+    padding: 20px
+    margin: 20px auto 40px auto
+    overflow-x: auto
+  +max-width(480)
+    font-size: 12px
+    pre
+      padding: 10px
+
+.actions
+  max-width: 500px
+  margin: 0 auto
+  padding: 20px 0
+  text-align: center
+  a
+    display: block
+    padding: 10px
+    font-size: 30px
+    color: #fff
+    background: #d7472b
+    transition: background linear .2s
+    -webkit-transition: background linear .2s
+    -moz-transition: background linear .2
     text-decoration: none
-    background: #ae1f23
-  a.increment
-    bottom: 100%
-    +border-top-radius(5px)
-  a.decrement
-    top: 100%
-    +border-bottom-radius(5px)
+    &:hover
+      background: #f4401d
+
+.author
+  text-align: center
+  font-size: 14px
+  clear: both
+  padding: 0 0 80px 0
+  a
+    text-decoration: none
+    color: #d7472b
+
+#numbers
+  position: fixed
+  left: -40px
+  right: -40px
+  top: -70px
+  bottom: -70px
+  overflow: hidden
+  font-weight: 200
+  span
+    font-size: 140px
+    line-height: 90%
+    color: transparent
+    text-shadow: 0 0 25px #a8a884
+    display: inline-block

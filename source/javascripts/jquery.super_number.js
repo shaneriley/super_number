@@ -32,6 +32,20 @@
     },
     formatOutput: function(val) { return val; },
     formatInput: function(val) { return val; },
+    increment: function() {
+      $(this).parent().find(".increment").trigger("mouseup");
+    },
+    decrement: function() {
+      $(this).parent().find(".decrement").trigger("mouseup");
+    },
+    getMaxStep: function(val, step) {
+      var mod = val % step;
+      return mod ? val - mod : val;
+    },
+    getMinStep: function(val, step) {
+      var mod = val % step;
+      return mod ? val + mod : val;
+    },
     setScale: function(val) {
       var s = this,
           multiple = +("1" + Array(s.scale + 1).join(0)),
@@ -52,10 +66,10 @@
       }
       return neg + whole_num + (decimal ? "." + decimal : "");
     },
-    keyup: function(e) {
+    keydown: function(e) {
       if (e.which !== 38 && e.which !== 40) { return; }
       var s = $(this).data(super_number.name);
-      s.controls["$" + (e.which === 38 ? "in" : "de") + "crement"].mouseup();
+      s.$el.trigger((e.which === 38 ? "in" : "de") + "crement." + super_number.name);
     },
     changeValue: function(e) {
       e.preventDefault();
@@ -88,12 +102,12 @@
       new_val = new_val / multiple;
       if (new_val > s.max || new_val < s.min) {
         var is_max = new_val > s.max;
-        s.$el.trigger(s.name + "." + (is_max ? "max" : "min") + "Reached");
+        s.$el.trigger((is_max ? "max" : "min") + "Reached." + s.name);
         if (!s.loop) {
-          new_val = is_max ? s.max : s.min;
+          new_val = is_max ? s.getMaxStep(s.max, s.step) : s.getMinStep(s.min, s.step);
         }
         else {
-          new_val = is_max ? s.min : s.max;
+          new_val = is_max ? s.getMinStep(s.min, s.step) : s.getMaxStep(s.max, s.step);
         }
       }
       new_val = s.setPrecision(s.setScale(new_val));
@@ -111,7 +125,7 @@
         $.each(["in", "de"], function(j, v) {
           s.controls["$" + v + "crement"].remove();
         });
-        $els.unwrap("." + s.container["class"]).unbind("." + s.name).removeData(s.name);
+        $els.unwrap("." + s.container["class"]).unbind(s.name).removeData(s.name);
       });
     },
     init: function() {
@@ -123,7 +137,9 @@
       }
       s.detectDataAttributes(s.dataAttributes);
       s.createElements();
-      s.$el.on("keydown." + s.name + ".keyup", s.keyup);
+      s.$el.on("keydown." + s.name, s.keydown);
+      s.$el.on("increment." + s.name, s.increment);
+      s.$el.on("decrement." + s.name, s.decrement);
       s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.changeValue)
         .on("mousedown." + s.name + ", click." + s.name, "a", false);
       s.hide_on_blur && s.$el.on("focus." + s.name + ".toggle, blur." + s.name + ".toggle", s.toggle);
