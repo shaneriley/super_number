@@ -14,6 +14,7 @@ body
     position: relative
     z-index: 2
     margin: 0 50px
+    z-index: 2
     +max-width
       margin: 0 20px
     +max-width(480)
@@ -40,7 +41,7 @@ h2
     font-size: 20px
   +max-width(480)
     font-weight: 400
-    font-size: 16px
+    font-size: 20px
     margin-bottom: 30px
 
 dl
@@ -53,6 +54,8 @@ dl
       font-size: 24px
       font-weight: normal
       line-height: 40px
+    +max-width(480)
+      padding-right: 10px
   dd
     display: inline-block
     span
@@ -74,6 +77,8 @@ dl
         outline: none
       &.money
         width: 80px
+      +max-width(480)
+        padding: 2px 3px
     .super_number
       display: inline-block
       position: relative
@@ -153,9 +158,12 @@ code
   bottom: -70px
   overflow: hidden
   font-weight: 200
+  z-index: 1
   span
     font-size: 140px
     line-height: 90%
     color: transparent
     text-shadow: 0 0 25px #a8a884
     display: inline-block
+    +max-width(480)
+      font-size: 70px
