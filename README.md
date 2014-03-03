@@ -26,6 +26,8 @@ $('input').trigger('increment.superNumber');
 
 When superNumber reaches either end of a defined range, it fires `maxReached.superNumber` and `minReached.superNumber` on the input. This in conjunction with the above events makes it easy for inputs to work together (for example, coupling hour and minute fields).
 
+Positioning of the anchor controls is now left to CSS or outside scripting as of v1.2.5.
+
 ## Options
 
 Technically, everything is overridable, right down to the initializer method,
@@ -41,7 +43,7 @@ but the options you're likely to override are:
   max: undefined,                    // Max value for input
   min: undefined,                    // Min value for input
   step: 1,                           // Amount to change value by
-  force_step: true,                  // Automatically change input to nearest step value
+  force_step: true,                  // Conform to element step amount when input blurred
   loop: false,                       // Exceeding min/max loops to opposite end
   precision: 0,                      // Number of integer places
   scale: 0,                          // Number of decimal places

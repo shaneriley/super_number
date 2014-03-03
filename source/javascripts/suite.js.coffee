@@ -220,7 +220,7 @@ test "minReached and maxReached events", ->
   $el = sn.init(1).fire
     min: 0
     max: 2
-  $message = $("<p />").addClass("message");
+  $message = $("<p />").addClass("message")
   $el.on("maxReached.superNumber", ->
     $message.text("Max Reached")
   )
