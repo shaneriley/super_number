@@ -1,4 +1,4 @@
-# jQuery superNumber v1.2.5
+# jQuery superNumber v1.3.0
 
 A tiny plugin that adds spinner-like controls to text inputs. Licensed under GPL 2.0 [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -47,6 +47,7 @@ but the options you're likely to override are:
   loop: false,                       // Exceeding min/max loops to opposite end
   precision: 0,                      // Number of integer places
   scale: 0,                          // Number of decimal places
+  inteval_delay: 200,                // Time in milliseconds to wait before change fired on mousedown
   formatInput: function(val) {       // Callback to format before processing. Must return a number.
     return val;
   },

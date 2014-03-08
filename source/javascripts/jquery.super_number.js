@@ -1,4 +1,4 @@
-/* jQuery superNumber version 1.2.5
+/* jQuery superNumber version 1.3.0
  * by Shane Riley and Cameron Daigle
  * Original source at https://github.com/shaneriley/super_number
  * Licensed under GPL 2.0 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -71,6 +71,24 @@
       var s = $(this).data(super_number.name);
       s.$el.trigger((e.which === 38 ? "in" : "de") + "crement." + super_number.name);
     },
+    startInterval: function(e) {
+      e.preventDefault();
+      var $a = $(this),
+          s = $a.data(super_number.name);
+      if (s.__interval) { return; }
+      setTimeout($.proxy(s.setInterval, s, $a, e), s.interval_delay);
+    },
+    stopInterval: function(e) {
+      var s = $(this).data(super_number.name);
+      clearInterval(s.__interval);
+      s.__interval = undefined;
+      s.changeValue.call(this, e);
+    },
+    setInterval: function($a, e) {
+      this.__interval = setInterval($.proxy(function() {
+        this.changeValue.call($a[0], e);
+      }, this), 16);
+    },
     changeValue: function(e) {
       e.preventDefault();
       var $e = $(this),
@@ -140,8 +158,9 @@
       s.$el.on("keydown." + s.name, s.keydown);
       s.$el.on("increment." + s.name, s.increment);
       s.$el.on("decrement." + s.name, s.decrement);
-      s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.changeValue)
-        .on("mousedown." + s.name + ", click." + s.name, "a", false);
+      s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.stopInterval)
+        .on("mousedown." + s.name, "a", s.startInterval)
+        .on("click." + s.name, "a", false);
       s.hide_on_blur && s.$el.on("focus." + s.name + ".toggle, blur." + s.name + ".toggle", s.toggle);
       s.force_step && s.$el.on("blur." + s.name, s.changeValue);
     }
@@ -170,7 +189,7 @@
       return $els;
     };
 
-    $.fn[plugin.name].version = "1.2.5";
+    $.fn[plugin.name].version = "1.3.0";
 
     $.fn[plugin.name].defaults = {
       dataAttributes: ["max", "min", "step", "precision", "scale"],
@@ -182,6 +201,7 @@
       precision: 0,
       scale: 0,
       loop: false,
+      interval_delay: 200,
       controls: {
         $el: $("<a />", { href: "#" }),
         increment: "+",

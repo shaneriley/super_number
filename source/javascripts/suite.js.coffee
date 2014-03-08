@@ -13,6 +13,10 @@ sn =
     $e = $.Event('keydown.superNumber')
     $e.keyCode = $e.which = k
     $el.trigger($e)
+  hold: ($a) ->
+    $a.trigger "mousedown"
+  release: ($a) ->
+    $a.trigger "mouseup"
   init: (val) ->
     @$el = $("#test_input").val(val)
     @
@@ -27,6 +31,18 @@ $.fn.shouldContain = (text) ->
 
 $.fn.shouldHaveValue = (val) ->
   equal @.val(), val, "#{@.selector} should have a value of #{val}"
+  @
+
+$.fn.shouldHaveValueGreaterThan = (val) ->
+  a = +@.val()
+  b = +val
+  ok a > b, "#{@.selector} should have a value greater than #{val}"
+  @
+
+$.fn.shouldHaveValueLessThan = (val) ->
+  a = +@.val()
+  b = +val
+  ok a < b, "#{@.selector} should have a value less than #{val}"
   @
 
 $.fn.shouldBe = (attr) ->
@@ -60,6 +76,26 @@ test "decrement button decrements by 1 when clicked", ->
   $el = sn.init(0).fire()
   sn.down()
   $el.shouldHaveValue("-1")
+
+asyncTest "increment button continues to increment by 1 when mousedown held", ->
+  $el = sn.init(0).fire()
+  $a = sn.data.controls.$increment
+  sn.hold $a
+  setTimeout(->
+    sn.release $a
+    $el.shouldHaveValueGreaterThan "1"
+    start()
+  , 500)
+
+asyncTest "decrement button continues to decrement by 1 when mousedown held", ->
+  $el = sn.init(0).fire()
+  $a = sn.data.controls.$decrement
+  sn.hold $a
+  setTimeout(->
+    sn.release $a
+    $el.shouldHaveValueLessThan "1"
+    start()
+  , 500)
 
 test "treat blank input as 0", ->
   $el = sn.init().fire()
