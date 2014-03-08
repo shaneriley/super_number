@@ -1,4 +1,4 @@
-/* jQuery superNumber version 1.3.0
+/* jQuery superNumber version 1.3.1
  * by Shane Riley and Cameron Daigle
  * Original source at https://github.com/shaneriley/super_number
  * Licensed under GPL 2.0 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -76,13 +76,15 @@
       var $a = $(this),
           s = $a.data(super_number.name);
       if (s.__interval) { return; }
-      setTimeout($.proxy(s.setInterval, s, $a, e), s.interval_delay);
+      s.__timeout = setTimeout($.proxy(s.setInterval, s, $a, e), s.interval_delay);
     },
     stopInterval: function(e) {
+      e.preventDefault();
       var s = $(this).data(super_number.name);
+      clearTimeout(s.__timeout);
       clearInterval(s.__interval);
-      s.__interval = undefined;
-      s.changeValue.call(this, e);
+      s.__interval = s.__timeout = undefined;
+      e.type !== "click" && s.changeValue.call(this, e);
     },
     setInterval: function($a, e) {
       this.__interval = setInterval($.proxy(function() {
@@ -160,7 +162,7 @@
       s.$el.on("decrement." + s.name, s.decrement);
       s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.stopInterval)
         .on("mousedown." + s.name, "a", s.startInterval)
-        .on("click." + s.name, "a", false);
+        .on("click." + s.name, "a", s.stopInterval);
       s.hide_on_blur && s.$el.on("focus." + s.name + ".toggle, blur." + s.name + ".toggle", s.toggle);
       s.force_step && s.$el.on("blur." + s.name, s.changeValue);
     }
@@ -189,7 +191,7 @@
       return $els;
     };
 
-    $.fn[plugin.name].version = "1.3.0";
+    $.fn[plugin.name].version = "1.3.1";
 
     $.fn[plugin.name].defaults = {
       dataAttributes: ["max", "min", "step", "precision", "scale"],
