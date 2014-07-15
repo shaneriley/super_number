@@ -25,7 +25,7 @@
       $.each(["in", "de"], function(i, v) {
         var c = v + "crement",
             $e = s.controls.$el.clone().text(s.controls[c]).data(super_number.name, s)
-                  .addClass(c);
+                  .addClass(c).attr('tabindex', -1);
         s.hide_on_blur && $e.hide();
         s.controls["$" + c] = $e.appendTo($c);
       });
