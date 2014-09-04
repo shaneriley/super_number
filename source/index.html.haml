@@ -58,10 +58,10 @@
           precision: 2,
           step: 5,
           loop: true
-        }).on("superNumber.maxReached", function() {
-          $("input.hours").trigger("superNumber.increment");
-        }).on("superNumber.minReached", function() {
-          $("input.hours").trigger("superNumber.decrement");
+        }).on("maxReached.superNumber", function() {
+          $("input.hours").trigger("increment.superNumber");
+        }).on("minReached.superNumber", function() {
+          $("input.hours").trigger("decrement.superNumber");
         });
 .actions
   = link_to "Download on Github", "https://github.com/shaneriley/super_number/"
