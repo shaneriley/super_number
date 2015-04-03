@@ -84,7 +84,7 @@
       clearTimeout(s.__timeout);
       clearInterval(s.__interval);
       s.__interval = s.__timeout = undefined;
-      e.type !== "click" && s.changeValue.call(this, e);
+      (e.type !== "click" && e.type !== 'mouseout') && s.changeValue.call(this, e);
     },
     setInterval: function($a, e) {
       this.__interval = setInterval($.proxy(function() {
@@ -162,6 +162,7 @@
       s.$el.on("decrement." + s.name, s.decrement);
       s.$el.closest("." + s.container["class"]).on("mouseup." + s.name + ".click", "a", s.stopInterval)
         .on("mousedown." + s.name, "a", s.startInterval)
+        .on("mouseout." + s.name, "a", s.stopInterval)
         .on("click." + s.name, "a", s.stopInterval);
       s.hide_on_blur && s.$el.on("focus." + s.name + ".toggle, blur." + s.name + ".toggle", s.toggle);
       s.force_step && s.$el.on("blur." + s.name, s.changeValue);
